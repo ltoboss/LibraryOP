@@ -7,7 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class BookClient {
-    private static final String API_BASE_URL = "http://openlibrary.org/";
+    private static final String API_BASE_URL = "https://api.themoviedb.org/3/search/movie?api_key=674ab1d4b16c420cd720d56ec45aa744&language=es-MX&";
     private AsyncHttpClient client;
 
     public BookClient() {
@@ -21,7 +21,7 @@ public class BookClient {
     // Method for accessing the search API
     public void getBooks(final String query, JsonHttpResponseHandler handler) {
         try {
-            String url = getApiUrl("search.json?q=");
+            String url = getApiUrl("query=");
             client.get(url + URLEncoder.encode(query, "utf-8"), handler);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

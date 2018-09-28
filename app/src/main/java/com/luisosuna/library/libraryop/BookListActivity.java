@@ -39,9 +39,9 @@ public class BookListActivity extends AppCompatActivity {
         bookAdapter = new BookAdapter(this, aBooks);
         lvBooks.setAdapter(bookAdapter);
         //Toast.makeText(BookListActivity.this, "Inicio", Toast.LENGTH_SHORT).show();
-        //fetchBooks("Oscar");
         progress = (ProgressBar) findViewById(R.id.progress);
         setupBookSelectedListener();
+        fetchBooks("a");
     }
 
     public void setupBookSelectedListener() {
@@ -69,7 +69,7 @@ public class BookListActivity extends AppCompatActivity {
                     JSONArray docs = null;
                     if(response != null) {
                         // Get the docs json array
-                        docs = response.getJSONArray("docs");
+                        docs = response.getJSONArray("results");
                         // Parse json array into array of model objects
                         final ArrayList<Book> books = Book.fromJson(docs);
                         // Remove all books from the adapter
@@ -105,7 +105,7 @@ public class BookListActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Fetch the data remotely
-                //Toast.makeText(BookListActivity.this, "Hola, string "+query, Toast.LENGTH_SHORT).show();
+                Toast.makeText(BookListActivity.this, "Hola, string "+query, Toast.LENGTH_SHORT).show();
                 fetchBooks(query);
                 // Reset SearchView
                 searchView.clearFocus();

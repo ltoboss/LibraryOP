@@ -13,6 +13,8 @@ public class Book implements Serializable {
     private String openLibraryId;
     private String author;
     private String title;
+    private String overview;
+
 
     public String getOpenLibraryId() {
         return openLibraryId;
@@ -26,14 +28,18 @@ public class Book implements Serializable {
         return author;
     }
 
+    public String getOverview() {
+        return overview;
+    }
+
     // Get medium sized book cover from covers API
     public String getCoverUrl() {
-        return "http://covers.openlibrary.org/b/olid/" + openLibraryId + "-M.jpg?default=false";
+        return "https://image.tmdb.org/t/p/w500/" + openLibraryId;
     }
 
     // Get large sized book cover from covers API
     public String getLargeCoverUrl() {
-        return "http://covers.openlibrary.org/b/olid/" + openLibraryId + "-L.jpg?default=false";
+        return "https://image.tmdb.org/t/p/w500/" + openLibraryId;
     }
 
     // Returns a Book given the expected JSON
@@ -42,14 +48,15 @@ public class Book implements Serializable {
         try {
             // Deserialize json into object fields
             // Check if a cover edition is available
-            if (jsonObject.has("cover_edition_key"))  {
-                book.openLibraryId = jsonObject.getString("cover_edition_key");
-            } else if(jsonObject.has("edition_key")) {
-                final JSONArray ids = jsonObject.getJSONArray("edition_key");
+            if (jsonObject.has("poster_path"))  {
+                    book.openLibraryId = jsonObject.getString("poster_path");
+            } else if(jsonObject.has("poster_path")) {
+                final JSONArray ids = jsonObject.getJSONArray("poster_path");
                 book.openLibraryId = ids.getString(0);
             }
-            book.title = jsonObject.has("title_suggest") ? jsonObject.getString("title_suggest") : "";
+            book.title = jsonObject.has("title") ? jsonObject.getString("title") : "";
             book.author = getAuthor(jsonObject);
+            book.overview = jsonObject.getString("overview");
         } catch (JSONException e) {
             e.printStackTrace();
             return null;

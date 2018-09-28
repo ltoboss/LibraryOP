@@ -57,6 +57,7 @@ public class BookDetailActivity extends AppCompatActivity {
         Picasso.with(this).load(Uri.parse(book.getLargeCoverUrl())).error(R.drawable.ic_nocover).into(ivBookCover);
         tvTitle.setText(book.getTitle());
         tvAuthor.setText(book.getAuthor());
+        tvPublisher.setText(book.getOverview());
         // fetch extra book data from books API
         client = new BookClient();
         client.getExtraBookDetails(book.getOpenLibraryId(), new JsonHttpResponseHandler() {
